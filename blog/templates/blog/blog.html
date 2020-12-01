@@ -2,5 +2,8 @@
 
 {% block content %}
     <h1>Posts will be here</h1>
+    {% for post in posts %}
+        <p>{{ post.title }}</p>
+    {% endfor %}
 
 {% endblock %}

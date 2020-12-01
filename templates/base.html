@@ -29,10 +29,11 @@
               Blog
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'post-list' %}">Post List</a>
               <a class="dropdown-item" href="#">Add Post</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else will be here</a>
+                {% for category in all_categories %}
+                    <a class="dropdown-item" href="{% url 'post-list' category %}">{{ category }}</a>
+                {% endfor %}
             </div>
           </li>
         </ul>
