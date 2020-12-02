@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.views.generic import ListView
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
 from blog.models import Post
 
 
@@ -14,3 +14,11 @@ class PostListView(ListView):
         category_name = self.kwargs['category']
         posts = Post.objects.filter(category__name=category_name)
         return posts
+
+
+class PostDetailView(DetailView):
+
+    template_name = "blog/post.html"
+    model = Post
+    slug_url_kwarg = 'slug'
+
