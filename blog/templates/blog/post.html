@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
                 <h2>{{ object.title }}</h2>
 
@@ -16,7 +16,7 @@
                 <hr>
 
                 <!-- Preview Image -->
-                <img class="img-fluid" src="http://placehold.it/730x300" alt="">
+                <img class="img-fluid" src="{{ object.image.url }}" alt="">
 
                 <hr>
 

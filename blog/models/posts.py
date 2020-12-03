@@ -2,7 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
-from .utils import change_pic_size
+from blog.utils import change_pic_size
+
 
 class Category(models.Model):
     name = models.CharField(max_length=150)
@@ -24,7 +25,8 @@ class Post(models.Model):
         return f"Post {self.id}, title: {self.title}"
 
     def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
         if not self.slug:
             self.slug = slugify(self.title)
-        change_pic_size(self.image.path, 730, 300)
-        super().save(*args, **kwargs)
+        change_pic_size(self.image.path, 420, 700)
+
