@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 from blog.models import Post
+from blog.forms import PostForm
 
 
 class PostListView(ListView):
@@ -21,4 +22,17 @@ class PostDetailView(DetailView):
     template_name = "blog/post.html"
     model = Post
     slug_url_kwarg = 'slug'
+
+
+class PostCreateView(CreateView):
+
+    model = Post
+    form_class = PostForm
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy("home")
 

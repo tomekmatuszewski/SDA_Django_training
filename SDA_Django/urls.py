@@ -19,6 +19,6 @@ from SDA_Django.views import HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomeView.as_view()),
-    path("", include("blog.urls")),
+    path('', HomeView.as_view(), name="home"),
+    path('', include("blog.urls")),
 ]
