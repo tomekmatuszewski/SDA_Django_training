@@ -7,13 +7,12 @@ from blog.forms import PostForm
 class PostListView(ListView):
     template_name = 'blog/blog.html'
     context_object_name = "posts"
-    ordering = ["-date_posted"]
     extra_context = {"title": "Blog"}
-    paginate_by = 5
+    paginate_by = 3
 
     def get_queryset(self):
         category_name = self.kwargs['category']
-        posts = Post.objects.filter(category__name=category_name)
+        posts = Post.objects.filter(category__name=category_name).order_by('-date_posted')
         return posts
 
 

@@ -1,6 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{ object.title }}</h1>
+                <h2>{{ object.title }}</h2>
+
+                <!-- Author -->
+                <p class="lead">
+                    by <a href="#">{{ object.author }}</a>
+                </p>
+
+                <hr>
+
+                <!-- Date/Time -->
+                <p><i class="far fa-clock"></i> Posted on {{ object.date_posted }}</p>
+
+                <hr>
+
+                <!-- Preview Image -->
+                <img class="img-fluid" src="http://placehold.it/730x300" alt="">
+
+                <hr>
+
+                <!-- Post Content -->
+                <p>{{ object.content }}</p>
+
+                <hr>
+
+                <!-- Blog Comments -->
+
+                <!-- Comments Form -->
+                <div class="card card-body">
+                    <h4>Leave a Comment:</h4>
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+                <hr>
 
 {% endblock %}

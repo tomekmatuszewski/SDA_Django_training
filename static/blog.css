@@ -2,6 +2,10 @@
     margin-top: 20px;
 }
 
+.container a {
+    text-decoration: none;
+}
+
 .card{
     background-color: #f5f5f5;
 }
@@ -26,3 +30,31 @@ footer {
     width: 40%;
 }
 
+.content-section #id_image{
+
+}
+
+.content-section button:hover{
+    background-color: #4e72dd;
+    border-color: #4e72dd;
+}
+
+
+.buttons-paginate .btn-info{
+    background-color: #4e72dd;
+    border: #4e72dd;
+}
+
+.buttons-paginate .btn-outline-info:hover{
+    background-color: #4e72dd;
+    border-color: #4e72dd;
+}
+
+.btn-outline-info, .btn-info{
+    border-color: #4e72dd;
+
+}
+
+.btn-outline-info{
+    color: #4e72dd;
+}
