@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 from blog.utils import change_pic_size
@@ -29,3 +30,5 @@ class Post(models.Model):
             self.slug = slugify(self.title)
         change_pic_size(self.image.path, 525, 1024)
 
+    def get_absolute_url(self):
+        return reverse("post-detail", kwargs={"slug": self.slug})

@@ -58,3 +58,13 @@ footer {
 .btn-outline-info{
     color: #4e72dd;
 }
+
+.post-buttons-panel a{
+    background-color: #4e72dd;
+    border-color: #4e72dd;
+}
+
+.post-buttons-panel a:hover{
+    background-color: #4e72dd;
+    border-color: #4e72dd;
+}

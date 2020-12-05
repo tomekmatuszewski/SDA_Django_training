@@ -24,7 +24,11 @@
                 <p>{{ object.content }}</p>
 
                 <hr>
-
+                <div class="post-buttons-panel">
+                    <a href="{% url 'post-update' object.slug %}" class="btn btn-danger">Update</a>
+                    <button href="#" class="btn btn-danger">Delete</button>
+                </div>
+                <hr>
                 <!-- Blog Comments -->
 
                 <!-- Comments Form -->

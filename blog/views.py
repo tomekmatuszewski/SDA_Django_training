@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from blog.models import Post
 from blog.forms import PostForm
 
@@ -13,7 +13,7 @@ class PostListView(ListView):
 
     def get_queryset(self):
         category_name = self.kwargs['category']
-        posts = Post.objects.filter(category__name=category_name).order_by('-date_posted')
+        posts = Post.objects.filter(category__name__contains=category_name).order_by('-date_posted')
         return posts
 
 
@@ -37,4 +37,19 @@ class PostCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy("home")
 
+
+class PostUpdateView(UpdateView):
+
+    model = Post
+    form_class = PostForm
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
 
