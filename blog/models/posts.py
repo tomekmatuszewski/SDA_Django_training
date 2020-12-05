@@ -2,11 +2,15 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.text import slugify
 from blog.utils import change_pic_size
+
 
 class Category(models.Model):
     name = models.CharField(max_length=150)
+
+    def save(self, *args, **kwargs):
+        self.name = self.name.lower()
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.name}"
@@ -26,8 +30,6 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        if not self.slug:
-            self.slug = slugify(self.title)
         change_pic_size(self.image.path, 525, 1024)
 
     def get_absolute_url(self):
