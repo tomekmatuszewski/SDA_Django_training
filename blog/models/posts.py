@@ -23,14 +23,14 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, related_name='posts')
     slug = models.SlugField(unique=True, blank=True, null=True, max_length=20)
-    image = models.ImageField(upload_to="blog_pics", default="default.png", help_text="Min. size 525x1024")
+    image = models.ImageField(upload_to="blog_pics", default="default.png", help_text="Min. size 500x750")
 
     def __str__(self):
         return f"Post {self.id}, title: {self.title}"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        change_pic_size(self.image.path, 525, 1024)
+        change_pic_size(self.image.path, 450, 675)
 
     def get_absolute_url(self):
         return reverse("post-detail", kwargs={"slug": self.slug})

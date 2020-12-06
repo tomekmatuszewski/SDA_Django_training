@@ -1,10 +1,9 @@
 from django.contrib import messages
-from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from blog.models import Post
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from blog.models import Post, Category
 from blog.forms import PostForm
 from django.utils.text import slugify
 
@@ -35,18 +34,9 @@ class PostCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        slug = slugify(form.cleaned_data['title'])
-        try:
-            form.instance.slug = slug
-            return super().form_valid(form)
-        except IntegrityError:
-            messages.error(
-                self.request,
-                message="The title already exists.Use unique post title",
-            )
+        super().form_valid(form)
         return HttpResponseRedirect(
-            reverse_lazy("post-list", kwargs={'category': form.cleaned_data['category']})
-        )
+            reverse_lazy("post-list", kwargs={'category': form.cleaned_data['category']}))
 
 
 class PostUpdateView(UpdateView):
