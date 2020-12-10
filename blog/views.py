@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from blog.models import Post, Category
 from blog.forms import PostForm
 from django.utils.text import slugify
@@ -21,14 +21,12 @@ class PostListView(ListView):
 
 
 class PostDetailView(DetailView):
-
     template_name = "blog/post.html"
     model = Post
     slug_url_kwarg = 'slug'
 
 
 class PostCreateView(CreateView):
-
     model = Post
     form_class = PostForm
 
@@ -40,7 +38,6 @@ class PostCreateView(CreateView):
 
 
 class PostUpdateView(UpdateView):
-
     model = Post
     form_class = PostForm
 
@@ -54,3 +51,16 @@ class PostUpdateView(UpdateView):
             return True
         return False
 
+
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = "blog/post_confirm_delete.html"
+
+    def get_success_url(self):
+        return reverse_lazy("post-list", kwargs={"category": self.object.category})
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
