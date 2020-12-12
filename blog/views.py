@@ -1,14 +1,12 @@
-from django.contrib import messages
-from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from blog.models import Post, Category
+from blog.models import Post
 from blog.forms import PostForm
-from django.utils.text import slugify
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin, ListView):
     template_name = 'blog/blog.html'
     context_object_name = "posts"
     extra_context = {"title": "Blog"}
@@ -20,13 +18,13 @@ class PostListView(ListView):
         return posts
 
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     template_name = "blog/post.html"
     model = Post
     slug_url_kwarg = 'slug'
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
 
@@ -37,7 +35,7 @@ class PostCreateView(CreateView):
             reverse_lazy("post-list", kwargs={'category': form.cleaned_data['category']}))
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
 
@@ -52,7 +50,7 @@ class PostUpdateView(UpdateView):
         return False
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     template_name = "blog/post_confirm_delete.html"
 
